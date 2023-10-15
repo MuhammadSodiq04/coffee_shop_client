@@ -19,9 +19,7 @@ class _BasketScreenState extends State<BasketScreen> {
         title: const Text("Basket"),
       ),
       body: StreamBuilder<List<OrderModel>>(
-        stream: context
-            .read<OrderProvider>()
-            .listenOrdersList(FirebaseAuth.instance.currentUser?.uid),
+        stream: context.read<OrderProvider>().listenOrdersList(FirebaseAuth.instance.currentUser!.uid),
         builder:
             (BuildContext context, AsyncSnapshot<List<OrderModel>> snapshot) {
           if (snapshot.hasData) {

@@ -3,6 +3,7 @@ class OrderModel {
   int totalPrice;
   String orderId;
   String productId;
+  String userId;
   String orderStatus;
   String createdAt;
   String productName;
@@ -12,6 +13,7 @@ class OrderModel {
     required this.totalPrice,
     required this.orderId,
     required this.productId,
+    required this.userId,
     required this.orderStatus,
     required this.createdAt,
     required this.productName,
@@ -33,6 +35,7 @@ class OrderModel {
         orderId: orderId ?? this.orderId,
         productId: productId ?? this.productId,
         productName: productName ?? this.productName,
+        userId: userId ?? this.userId,
         orderStatus: orderStatus ?? this.orderStatus,
         createdAt: createdAt ?? this.createdAt,
       );
@@ -44,6 +47,7 @@ class OrderModel {
       orderId: jsonData['orderId'] as String? ?? '',
       productName: jsonData['productName'] as String? ?? '',
       productId: jsonData['productId'] as String? ?? '',
+      userId: jsonData['userId'] as String? ?? '',
       orderStatus: jsonData['orderStatus'] as String? ?? '',
       createdAt: jsonData['createdAt'] as String? ?? '',
     );
@@ -55,6 +59,7 @@ class OrderModel {
       'totalPrice': totalPrice,
       'orderId': orderId,
       'productId': productId,
+      'userId': userId,
       'orderStatus': orderStatus,
       'createdAt': createdAt,
       'productName': productName,
@@ -68,6 +73,7 @@ class OrderModel {
       totalPrice: $totalPrice,
       orderId: $orderId,
       productId: $productId,
+      userId: $userId,
       orderStatus: $orderStatus,
       createdAt: $createdAt,
       ''';

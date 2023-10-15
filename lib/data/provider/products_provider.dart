@@ -174,14 +174,6 @@ class ProductsProvider with ChangeNotifier{
     }
   }
 
-  // setInitialValues(CategoryModel categoryModel) {
-  //   productNameController =
-  //       TextEditingController(text: categoryModel.categoryName);
-  //   productPriceController =
-  //       TextEditingController(text: categoryModel.description);
-  //   notifyListeners();
-  // }
-
   clearParameters() {
     uploadedImagesUrls = [];
     productPriceController.clear();
