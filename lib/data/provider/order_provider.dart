@@ -3,11 +3,12 @@ import 'package:coffee_shop/data/model/order_model.dart';
 import 'package:coffee_shop/data/model/universal_data.dart';
 import 'package:coffee_shop/data/servise/orders_service.dart';
 import 'package:coffee_shop/utils/ui_utils/loading_dialog.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class OrderProvider with ChangeNotifier {
   OrderProvider({required this.orderService}) {
-    // listenOrders(FirebaseAuth.instance.currentUser!.uid);
+    listenOrders(FirebaseAuth.instance.currentUser?.uid);
   }
 
   final OrderService orderService;
@@ -17,6 +18,7 @@ class OrderProvider with ChangeNotifier {
     required BuildContext context,
     required OrderModel orderModel,
   }) async {
+    print(userOrders.toString());
     List<OrderModel> exists = userOrders
         .where((element) => element.productId == orderModel.productId)
         .toList();
@@ -114,7 +116,7 @@ class OrderProvider with ChangeNotifier {
     }
   }
 
-  listenOrders(String userId) async {
+  listenOrders(String? userId) async {
     listenOrdersList(userId).listen((List<OrderModel> orders) {
       userOrders = orders;
       debugPrint("CURRENT USER ORDERS LENGTH:${userOrders.length}");

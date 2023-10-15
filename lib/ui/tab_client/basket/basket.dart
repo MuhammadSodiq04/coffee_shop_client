@@ -1,5 +1,6 @@
 import 'package:coffee_shop/data/model/order_model.dart';
 import 'package:coffee_shop/data/provider/order_provider.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -20,7 +21,7 @@ class _BasketScreenState extends State<BasketScreen> {
       body: StreamBuilder<List<OrderModel>>(
         stream: context
             .read<OrderProvider>()
-            .listenOrdersList(''),
+            .listenOrdersList(FirebaseAuth.instance.currentUser?.uid),
         builder:
             (BuildContext context, AsyncSnapshot<List<OrderModel>> snapshot) {
           if (snapshot.hasData) {

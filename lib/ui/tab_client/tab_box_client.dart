@@ -44,12 +44,10 @@ class _TabBoxClientState extends State<TabBoxClient> {
             topLeft: Radius.circular(24),
           ),
           child: BottomNavigationBar(
-            backgroundColor: AppColors.c_111015,
+            backgroundColor: Colors.blue,
             items: const [
-              BottomNavigationBarItem(icon: Icon(Icons.home), label: '',),
-              BottomNavigationBarItem(icon: Icon(Icons.category), label: '',),
-              BottomNavigationBarItem(icon: Icon(Icons.shopping_cart), label: '',),
-              BottomNavigationBarItem(icon: Icon(Icons.person), label: '',),
+              BottomNavigationBarItem(icon: Icon(Icons.home,color: Colors.white,), label: '',),
+              BottomNavigationBarItem(icon: Icon(Icons.shopping_cart,color: Colors.white,), label: '',),
             ],
             currentIndex: currentIndex,
             onTap: _onItemTapped,
