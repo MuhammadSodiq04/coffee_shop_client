@@ -1,5 +1,4 @@
 class CoffeeModel {
-  int count;
   int price;
   List<dynamic> productImages;
   String categoryId;
@@ -10,7 +9,6 @@ class CoffeeModel {
   String currency;
 
   CoffeeModel({
-    required this.count,
     required this.price,
     required this.productImages,
     required this.categoryId,
@@ -22,7 +20,6 @@ class CoffeeModel {
   });
 
   CoffeeModel copyWith({
-    int? count,
     int? price,
     List<dynamic>? productImages,
     String? categoryId,
@@ -33,7 +30,6 @@ class CoffeeModel {
     String? currency,
   }) {
     return CoffeeModel(
-      count: count ?? this.count,
       price: price ?? this.price,
       productImages: productImages ?? this.productImages,
       categoryId: categoryId ?? this.categoryId,
@@ -47,7 +43,6 @@ class CoffeeModel {
 
   factory CoffeeModel.fromJson(Map<String, dynamic> jsonData) {
     return CoffeeModel(
-      count: jsonData['count'] as int? ?? 0,
       price: jsonData['price'] as int? ?? 0,
       productImages: (jsonData['productImages'] as List<dynamic>? ?? []),
       categoryId: jsonData['categoryId'] as String? ?? '',
@@ -61,7 +56,6 @@ class CoffeeModel {
 
   Map<String, dynamic> toJson() {
     return {
-      'count': count,
       'price': price,
       'productImages': productImages,
       'categoryId': categoryId,
@@ -76,7 +70,6 @@ class CoffeeModel {
   @override
   String toString() {
     return '''
-      count: $count,
       price: $price,
       productImages: $productImages,
       categoryId: $categoryId,

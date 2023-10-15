@@ -22,7 +22,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title:  const Text("Hi"),
+        title:  const Text("Coffee"),
       ),
       body: Column(
         children: [
@@ -79,71 +79,50 @@ class _ProductsScreenState extends State<ProductsScreen> {
                                                 // mainAxisAlignment:
                                                 //     MainAxisAlignment.start,
                                                 crossAxisAlignment:
-                                                    CrossAxisAlignment.end,
+                                                    CrossAxisAlignment.start,
                                                 children: [
-
-                                                  const SizedBox(height: 5),
-                                                  Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .center,
-                                                    children: [
-                                                      Text(
-                                                        productModel
-                                                            .productName,
-                                                        style: const TextStyle(
-                                                            fontSize: 22,
-                                                            color:
-                                                                Colors.white,
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .w700),
+                                                  Hero(
+                                                    tag: index,
+                                                    child: ClipRRect(
+                                                      borderRadius: const BorderRadius.only(topLeft: Radius.circular(16),topRight: Radius.circular(16)),
+                                                      child: CachedNetworkImage(
+                                                        height: 172.h,
+                                                        width: 175.w,
+                                                        fit: BoxFit.fill,
+                                                        imageUrl: productModel.productImages.first,
+                                                        placeholder: (context, url) =>
+                                                        const ShimmerPhoto(),
+                                                        errorWidget: (context, url, error) => const Icon(
+                                                          Icons.error,color: Colors.red,),
                                                       ),
-                                                      const SizedBox(height: 5),
-                                                      const SizedBox(
-                                                          height: 5),
-                                                      Text(
-                                                        "Price: ${productModel.price} ${productModel.currency}",
-                                                        style: const TextStyle(
-                                                            fontSize: 18,
-                                                            color:
-                                                                Colors.white,
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .w500),
-                                                      ),
-                                                      const SizedBox(
-                                                          height: 5),
-                                                      Text(
-                                                        "Count: ${productModel.count}",
-                                                        style: const TextStyle(
-                                                            fontSize: 18,
-                                                            color:
-                                                                Colors.white,
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .w500),
-                                                      ),
-                                                      SizedBox(height: 13.h,),
-                                                      Hero(
-                                                        tag: index,
-                                                        child: ClipRRect(
-                                                          borderRadius: const BorderRadius.only(bottomLeft: Radius.circular(16),bottomRight: Radius.circular(16)),
-                                                          child: CachedNetworkImage(
-                                                            height: 172.h,
-                                                            width: 175.w,
-                                                            fit: BoxFit.fill,
-                                                            imageUrl: productModel.productImages.first,
-                                                            placeholder: (context, url) =>
-                                                            const ShimmerPhoto(),
-                                                            errorWidget: (context, url, error) => const Icon(
-                                                              Icons.error,color: Colors.red,),
-                                                          ),
-                                                        ),
-                                                      ),
-
-                                                    ],
+                                                    ),
                                                   ),
+                                                  const SizedBox(height: 5),
+                                                  Text(
+                                                    productModel
+                                                        .productName,
+                                                    style: const TextStyle(
+                                                        fontSize: 22,
+                                                        color:
+                                                        Colors.white,
+                                                        fontWeight:
+                                                        FontWeight
+                                                            .w700),
+                                                  ),
+                                                  const SizedBox(height: 5),
+                                                  const SizedBox(
+                                                      height: 5),
+                                                  Text(
+                                                    "Price: ${productModel.price} ${productModel.currency}",
+                                                    style: const TextStyle(
+                                                        fontSize: 18,
+                                                        color:
+                                                        Colors.white,
+                                                        fontWeight:
+                                                        FontWeight
+                                                            .w500),
+                                                  ),
+                                                  SizedBox(height: 13.h,),
                                                 ],
                                               ),
                                             ),

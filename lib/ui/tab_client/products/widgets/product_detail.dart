@@ -3,6 +3,7 @@ import 'package:coffee_shop/data/model/coffee_model.dart';
 import 'package:coffee_shop/data/model/order_model.dart';
 import 'package:coffee_shop/data/provider/order_provider.dart';
 import 'package:coffee_shop/utils/ui_utils/global_button.dart';
+import 'package:coffee_shop/utils/ui_utils/global_dialog.dart';
 import 'package:coffee_shop/utils/ui_utils/shimmer_photo.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -88,16 +89,6 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                   height: 20.h,
                 ),
                 Text(
-                  "Count: ${productModel.count}",
-                  style: TextStyle(
-                      fontSize: 22.spMin,
-                      color: Colors.black,
-                      fontWeight: FontWeight.w500),
-                ),
-                SizedBox(
-                  height: 20.h,
-                ),
-                Text(
                   "Price: ${productModel.price} ${productModel.currency}",
                   style: TextStyle(
                       fontSize: 22.spMin,
@@ -121,18 +112,16 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                     ),
                     Text(
                       count.toString(),
-                      style: const TextStyle(
-                          fontSize: 20,
+                      style: TextStyle(
+                          fontSize: 20.sp,
                           color: Colors.black,
                           fontWeight: FontWeight.w600),
                     ),
                     TextButton(
                         onPressed: () {
-                          if ((count + 1) <= productModel.count) {
                             setState(() {
                               count++;
                             });
-                          }
                         },
                         child: const Icon(Icons.add)),
                   ],
@@ -143,28 +132,16 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                   children: [
                     Text(
                       "${productModel.price * count}.   ${productModel.currency}",
-                      style: const TextStyle(
-                          fontSize: 18,
+                      style: TextStyle(
+                          fontSize: 18.sp,
                           color: Colors.black,
                           fontWeight: FontWeight.w600),
                     ),
 
                     GlobalButton(
-                      onTap: () {
-                        Provider.of<OrderProvider>(context, listen: false).addOrder(
-                          context: context,
-                          orderModel: OrderModel(
-                            count: count,
-                            totalPrice: productModel.price * count,
-                            orderId: "",
-                            productId: productModel.productId,
-                            orderStatus: "ordered",
-                            userId: FirebaseAuth.instance.currentUser!.uid,
-                            createdAt: DateTime.now().toString(),
-                            productName: productModel.productName,
-                          ),
-                        );
-                      },
+                      onTap: ()async {
+                        showProductAlertDialog(context: context, title: "Client info",coffeeModel: productModel,count: count);
+                        },
                       title: "Add to Card",
                     )
                   ],

@@ -39,6 +39,7 @@ class OrderProvider with ChangeNotifier {
 
     if (context.mounted) {
       hideLoading(dialogContext: context);
+      Navigator.pop(context);
     }
     if (universalData.error.isEmpty) {
       if (context.mounted) {

@@ -7,6 +7,9 @@ class OrderModel {
   String orderStatus;
   String createdAt;
   String productName;
+  String userName;
+  String userPhone;
+  String userAddress;
 
   OrderModel({
     required this.count,
@@ -17,6 +20,9 @@ class OrderModel {
     required this.orderStatus,
     required this.createdAt,
     required this.productName,
+    required this.userName,
+    required this.userPhone,
+    required this.userAddress,
   });
 
   OrderModel copWith({
@@ -28,6 +34,9 @@ class OrderModel {
     String? orderStatus,
     String? createdAt,
     String? productName,
+    String? userName,
+    String? userPhone,
+    String? userAddress,
   }) =>
       OrderModel(
         count: count ?? this.count,
@@ -38,6 +47,9 @@ class OrderModel {
         userId: userId ?? this.userId,
         orderStatus: orderStatus ?? this.orderStatus,
         createdAt: createdAt ?? this.createdAt,
+        userName: userName ?? this.userName,
+        userPhone: userPhone ?? this.userPhone,
+        userAddress: userAddress ?? this.userAddress,
       );
 
   factory OrderModel.fromJson(Map<String, dynamic> jsonData) {
@@ -50,6 +62,9 @@ class OrderModel {
       userId: jsonData['userId'] as String? ?? '',
       orderStatus: jsonData['orderStatus'] as String? ?? '',
       createdAt: jsonData['createdAt'] as String? ?? '',
+      userName: jsonData['userName'] as String? ?? '',
+      userPhone: jsonData['userPhone'] as String? ?? '',
+      userAddress: jsonData['userAddress'] as String? ?? '',
     );
   }
 
@@ -63,6 +78,9 @@ class OrderModel {
       'orderStatus': orderStatus,
       'createdAt': createdAt,
       'productName': productName,
+      'userName': userName,
+      'userPhone': userPhone,
+      'userAddress': userAddress,
     };
   }
 
@@ -76,6 +94,10 @@ class OrderModel {
       userId: $userId,
       orderStatus: $orderStatus,
       createdAt: $createdAt,
+      productName: $productName,
+      userName: $userName,
+      userPhone: $userPhone,
+      userAddress: $userAddress,
       ''';
   }
 }

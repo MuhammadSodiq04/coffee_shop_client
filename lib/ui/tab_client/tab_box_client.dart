@@ -2,6 +2,7 @@ import 'package:coffee_shop/ui/tab_client/basket/basket.dart';
 import 'package:coffee_shop/ui/tab_client/products/products_screen_client.dart';
 import 'package:coffee_shop/utils/colors/app_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class TabBoxClient extends StatefulWidget {
   const TabBoxClient({super.key});
@@ -39,15 +40,17 @@ class _TabBoxClientState extends State<TabBoxClient> {
       bottomNavigationBar:Container(
         color: Colors.transparent,
         child: ClipRRect(
-          borderRadius: const BorderRadius.only(
-            topRight: Radius.circular(24),
-            topLeft: Radius.circular(24),
+          borderRadius: BorderRadius.only(
+            topRight: Radius.circular(24.r),
+            topLeft: Radius.circular(24.r),
           ),
           child: BottomNavigationBar(
+            showSelectedLabels: false,
+            showUnselectedLabels: false,
             backgroundColor: Colors.blue,
-            items: const [
-              BottomNavigationBarItem(icon: Icon(Icons.home,color: Colors.white,), label: '',),
-              BottomNavigationBarItem(icon: Icon(Icons.shopping_cart,color: Colors.white,), label: '',),
+            items: [
+              BottomNavigationBarItem(icon: Icon(Icons.home,color: Colors.white,size: 30.w,), label: '',),
+              BottomNavigationBarItem(icon: Icon(Icons.shopping_cart,color: Colors.white,size: 30.w,), label: '',),
             ],
             currentIndex: currentIndex,
             onTap: _onItemTapped,

@@ -35,7 +35,6 @@ class ProductsProvider with ChangeNotifier{
         countText.isNotEmpty) {
 
       CoffeeModel coffeeModel = CoffeeModel(
-        count: int.parse(countText),
         price: int.parse(priceText),
         productImages: uploadedImagesUrls,
         categoryId: categoryId,
@@ -126,7 +125,6 @@ class ProductsProvider with ChangeNotifier{
       showLoading(context: context);
       UniversalData universalData = await productsService.updateProduct(
         coffeeModel: CoffeeModel(
-          count: 1,
           price: 23,
           productImages: [],
           categoryId: productModel.categoryId,

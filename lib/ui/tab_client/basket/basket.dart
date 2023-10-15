@@ -34,7 +34,7 @@ class _BasketScreenState extends State<BasketScreen> {
                       context.read<OrderProvider>().deleteOrder(context: context, orderId: orderModel.orderId);
                     },
                     title: Text(orderModel.productName),
-                    subtitle: Text(orderModel.count.toString()),
+                    subtitle: Text("${orderModel.count}\n${orderModel.userName}\n${orderModel.userPhone}\n${orderModel.totalPrice}\n${orderModel.createdAt}"),
                     trailing: Text(orderModel.orderStatus),
                   );
                 },
