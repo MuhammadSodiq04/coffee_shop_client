@@ -1,6 +1,8 @@
 import 'package:coffee_shop/data/model/order_model.dart';
 import 'package:coffee_shop/data/provider/order_provider.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
 class BasketScreen extends StatefulWidget {
@@ -15,12 +17,17 @@ class _BasketScreenState extends State<BasketScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Basket"),
+        backgroundColor: Colors.brown,
+        title: Text("Basket",
+          style: TextStyle(
+            fontWeight: FontWeight.w700,
+            color: Colors.white,
+            fontSize: 24.sp,
+            fontFamily: "Montserrat",
+          ),),
       ),
       body: StreamBuilder<List<OrderModel>>(
-        stream: context
-            .read<OrderProvider>()
-            .listenOrdersList(''),
+        stream: context.read<OrderProvider>().listenOrdersList(FirebaseAuth.instance.currentUser!.uid),
         builder:
             (BuildContext context, AsyncSnapshot<List<OrderModel>> snapshot) {
           if (snapshot.hasData) {
@@ -34,8 +41,8 @@ class _BasketScreenState extends State<BasketScreen> {
                     onLongPress: (){
                       context.read<OrderProvider>().deleteOrder(context: context, orderId: orderModel.orderId);
                     },
-                    title: Text(orderModel.productName),
-                    subtitle: Text(orderModel.count.toString()),
+                    title: Text(orderModel.coffeeName),
+                    subtitle: Text("${orderModel.count}\n${orderModel.userName}\n${orderModel.userPhone}\n${orderModel.totalPrice}\n${orderModel.createdAt}"),
                     trailing: Text(orderModel.orderStatus),
                   );
                 },

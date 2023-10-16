@@ -3,11 +3,12 @@ import 'package:coffee_shop/data/model/order_model.dart';
 import 'package:coffee_shop/data/model/universal_data.dart';
 import 'package:coffee_shop/data/servise/orders_service.dart';
 import 'package:coffee_shop/utils/ui_utils/loading_dialog.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class OrderProvider with ChangeNotifier {
   OrderProvider({required this.orderService}) {
-    // listenOrders(FirebaseAuth.instance.currentUser!.uid);
+    listenOrders(FirebaseAuth.instance.currentUser!.uid);
   }
 
   final OrderService orderService;
@@ -18,7 +19,7 @@ class OrderProvider with ChangeNotifier {
     required OrderModel orderModel,
   }) async {
     List<OrderModel> exists = userOrders
-        .where((element) => element.productId == orderModel.productId)
+        .where((element) => element.coffeeId == orderModel.coffeeId)
         .toList();
 
     OrderModel? oldOrderModel;
@@ -37,6 +38,7 @@ class OrderProvider with ChangeNotifier {
 
     if (context.mounted) {
       hideLoading(dialogContext: context);
+      Navigator.pop(context);
     }
     if (universalData.error.isEmpty) {
       if (context.mounted) {

@@ -1,34 +1,35 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:coffee_shop/data/cubit/coffee_count_cubit.dart';
 import 'package:coffee_shop/data/model/coffee_model.dart';
 import 'package:coffee_shop/data/model/order_model.dart';
 import 'package:coffee_shop/data/provider/order_provider.dart';
 import 'package:coffee_shop/utils/ui_utils/global_button.dart';
+import 'package:coffee_shop/utils/ui_utils/global_dialog.dart';
 import 'package:coffee_shop/utils/ui_utils/shimmer_photo.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
-class ProductDetailScreen extends StatefulWidget {
-  const ProductDetailScreen(
+class CoffeeDetailScreen extends StatefulWidget {
+  const CoffeeDetailScreen(
       {super.key, required this.argumentsList});
 
   final List<dynamic> argumentsList;
 
 
-
-
   @override
-  State<ProductDetailScreen> createState() => _ProductDetailScreenState();
+  State<CoffeeDetailScreen> createState() => _CoffeeDetailScreenState();
 }
 
-class _ProductDetailScreenState extends State<ProductDetailScreen> {
+class _CoffeeDetailScreenState extends State<CoffeeDetailScreen> {
   int count = 1;
-  late CoffeeModel productModel;
+  late CoffeeModel coffeeModel;
   late int index;
 
   @override
   void initState() {
-    productModel = widget.argumentsList[0];
+    coffeeModel = widget.argumentsList[0];
     index = widget.argumentsList[1];
     super.initState();
   }
@@ -37,25 +38,30 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Product Detail"),
-        centerTitle: true,
+        backgroundColor: Colors.brown,
+        title: Text("Coffee Detail",
+          style: TextStyle(
+            fontWeight: FontWeight.w700,
+            color: Colors.white,
+            fontSize: 24.sp,
+            fontFamily: "Montserrat",
+          ),),
       ),
       body: Column(
         children: [
           Expanded(
             child: ListView(
               physics: const ScrollPhysics(),
-              padding: const EdgeInsets.symmetric(horizontal: 38),
+              padding: EdgeInsets.all(20.r),
               children: [
                 Hero(
                   tag: index,
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(10.r),
                     child: CachedNetworkImage(
-                      height: 350.h,
-                      // width: 300.h,
+                      height: 400.h,
                       fit: BoxFit.fill,
-                      imageUrl: productModel.productImages.first,
+                      imageUrl: coffeeModel.coffeeImages.first,
                       placeholder: (context, url) =>
                           const ShimmerPhoto(),
                       errorWidget: (context, url, error) =>
@@ -67,7 +73,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                   height: 20.h,
                 ),
                 Text(
-                  productModel.productName,
+                  coffeeModel.coffeeName,
                   style: TextStyle(
                       fontSize: 32.spMin,
                       color: Colors.black,
@@ -77,7 +83,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                   height: 20.h,
                 ),
                 Text(
-                  productModel.description,
+                  coffeeModel.description,
                   style: TextStyle(
                       fontSize: 22.spMin,
                       color: Colors.black,
@@ -87,17 +93,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                   height: 20.h,
                 ),
                 Text(
-                  "Count: ${productModel.count}",
-                  style: TextStyle(
-                      fontSize: 22.spMin,
-                      color: Colors.black,
-                      fontWeight: FontWeight.w500),
-                ),
-                SizedBox(
-                  height: 20.h,
-                ),
-                Text(
-                  "Price: ${productModel.price} ${productModel.currency}",
+                  "Price: ${coffeeModel.price} So'm",
                   style: TextStyle(
                       fontSize: 22.spMin,
                       color: Colors.black,
@@ -108,30 +104,22 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                   children: [
                     TextButton(
                       onPressed: () {
-                        if (count > 1) {
-                          setState(() {
-                            count--;
-                          });
-                        }
+                        context.read<CoffeeCountCubit>().decrementCount();
                       },
                       child: const Icon(
                         Icons.remove,
                       ),
                     ),
                     Text(
-                      count.toString(),
-                      style: const TextStyle(
-                          fontSize: 20,
+                      context.watch<CoffeeCountCubit>().state.toString(),
+                      style: TextStyle(
+                          fontSize: 20.sp,
                           color: Colors.black,
                           fontWeight: FontWeight.w600),
                     ),
                     TextButton(
                         onPressed: () {
-                          if ((count + 1) <= productModel.count) {
-                            setState(() {
-                              count++;
-                            });
-                          }
+                          context.read<CoffeeCountCubit>().incrementCount();
                         },
                         child: const Icon(Icons.add)),
                   ],
@@ -141,28 +129,17 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      "${productModel.price * count}.   ${productModel.currency}",
-                      style: const TextStyle(
-                          fontSize: 18,
+                      "${coffeeModel.price * context.watch<CoffeeCountCubit>().state} ",
+                      style: TextStyle(
+                          fontSize: 18.sp,
                           color: Colors.black,
                           fontWeight: FontWeight.w600),
                     ),
 
                     GlobalButton(
-                      onTap: () {
-                        Provider.of<OrderProvider>(context, listen: false).addOrder(
-                          context: context,
-                          orderModel: OrderModel(
-                            count: count,
-                            totalPrice: productModel.price * count,
-                            orderId: "",
-                            productId: productModel.productId,
-                            orderStatus: "ordered",
-                            createdAt: DateTime.now().toString(),
-                            productName: productModel.productName,
-                          ),
-                        );
-                      },
+                      onTap: ()async {
+                        showProductAlertDialog(context: context, title: "Client info",coffeeModel: coffeeModel,count: count);
+                        },
                       title: "Add to Card",
                     )
                   ],

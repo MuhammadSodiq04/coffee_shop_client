@@ -1,90 +1,69 @@
 class CoffeeModel {
-  int count;
   int price;
-  List<dynamic> productImages;
-  String categoryId;
-  String productId;
-  String productName;
+  List<dynamic> coffeeImages;
+  String coffeeId;
+  String coffeeName;
   String description;
   String createdAt;
-  String currency;
 
   CoffeeModel({
-    required this.count,
     required this.price,
-    required this.productImages,
-    required this.categoryId,
-    required this.productId,
-    required this.productName,
+    required this.coffeeImages,
+    required this.coffeeId,
+    required this.coffeeName,
     required this.description,
     required this.createdAt,
-    required this.currency,
   });
 
   CoffeeModel copyWith({
-    int? count,
     int? price,
-    List<dynamic>? productImages,
-    String? categoryId,
-    String? productId,
-    String? productName,
+    List<dynamic>? coffeeImages,
+    String? coffeeId,
+    String? coffeeName,
     String? description,
     String? createdAt,
-    String? currency,
   }) {
     return CoffeeModel(
-      count: count ?? this.count,
       price: price ?? this.price,
-      productImages: productImages ?? this.productImages,
-      categoryId: categoryId ?? this.categoryId,
-      productId: productId ?? this.productId,
-      productName: productName ?? this.productName,
+      coffeeImages: coffeeImages ?? this.coffeeImages,
+      coffeeId: coffeeId ?? this.coffeeId,
+      coffeeName: coffeeName ?? this.coffeeName,
       description: description ?? this.description,
       createdAt: createdAt ?? this.createdAt,
-      currency: currency ?? this.currency,
     );
   }
 
   factory CoffeeModel.fromJson(Map<String, dynamic> jsonData) {
     return CoffeeModel(
-      count: jsonData['count'] as int? ?? 0,
       price: jsonData['price'] as int? ?? 0,
-      productImages: (jsonData['productImages'] as List<dynamic>? ?? []),
-      categoryId: jsonData['categoryId'] as String? ?? '',
-      productId: jsonData['productId'] as String? ?? '',
-      productName: jsonData['productName'] as String? ?? '',
+      coffeeImages: (jsonData['coffeeImages'] as List<dynamic>? ?? []),
+      coffeeId: jsonData['coffeeId'] as String? ?? '',
+      coffeeName: jsonData['coffeeName'] as String? ?? '',
       description: jsonData['description'] as String? ?? '',
       createdAt: jsonData['createdAt'] as String? ?? '',
-      currency: jsonData['currency'] as String? ?? '',
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
-      'count': count,
       'price': price,
-      'productImages': productImages,
-      'categoryId': categoryId,
-      'productId': productId,
-      'productName': productName,
+      'coffeeImages': coffeeImages,
+      'coffeeId': coffeeId,
+      'coffeeName': coffeeName,
       'description': description,
       'createdAt': createdAt,
-      'currency': currency,
     };
   }
 
   @override
   String toString() {
     return '''
-      count: $count,
       price: $price,
-      productImages: $productImages,
-      categoryId: $categoryId,
-      productId: $productId,
-      productName: $productName,
+      coffeeImages: $coffeeImages,
+      coffeeId: $coffeeId,
+      coffeeName: $coffeeName,
       description: $description,
       createdAt: $createdAt,
-      currency: $currency
       ''';
   }
 }

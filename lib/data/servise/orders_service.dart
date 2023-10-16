@@ -1,18 +1,19 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:coffee_shop/data/model/order_model.dart';
 import 'package:coffee_shop/data/model/universal_data.dart';
+import 'package:coffee_shop/utils/ui_utils/constants.dart';
 
 class OrderService {
   Future<UniversalData> addOrder({required OrderModel orderModel}) async {
     try {
-      DocumentReference newCategory = await FirebaseFirestore.instance
-          .collection("orders")
+      DocumentReference newOrder = await FirebaseFirestore.instance
+          .collection(firebaseOrderName)
           .add(orderModel.toJson());
 
       await FirebaseFirestore.instance
-          .collection("orders")
-          .doc(newCategory.id)
-          .update({"orderId": newCategory.id});
+          .collection(firebaseOrderName)
+          .doc(newOrder.id)
+          .update({"orderId": newOrder.id});
 
       return UniversalData(data: "Order added!");
     } on FirebaseException catch (e) {
@@ -23,14 +24,14 @@ class OrderService {
   }
 
   Future<UniversalData> updateOrder({required OrderModel orderModel}) async {
-  print("INSIDE UPDATE: ${orderModel.orderId}");
-   try {
+    print("INSIDE UPDATE: ${orderModel.orderId}");
+    try {
       await FirebaseFirestore.instance
-          .collection("orders")
+          .collection(firebaseOrderName)
           .doc(orderModel.orderId)
           .update(
-            orderModel.toJson(),
-          );
+        orderModel.toJson(),
+      );
 
       return UniversalData(data: "Order updated!");
     } on FirebaseException catch (e) {
@@ -43,7 +44,7 @@ class OrderService {
   Future<UniversalData> deleteOrder({required String orderId}) async {
     try {
       await FirebaseFirestore.instance
-          .collection("orders")
+          .collection(firebaseOrderName)
           .doc(orderId)
           .delete();
 
