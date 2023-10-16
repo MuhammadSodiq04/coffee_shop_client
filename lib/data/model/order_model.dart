@@ -2,11 +2,11 @@ class OrderModel {
   int count;
   int totalPrice;
   String orderId;
-  String productId;
+  String coffeeId;
   String userId;
   String orderStatus;
   String createdAt;
-  String productName;
+  String coffeeName;
   String userName;
   String userPhone;
   String userAddress;
@@ -15,11 +15,11 @@ class OrderModel {
     required this.count,
     required this.totalPrice,
     required this.orderId,
-    required this.productId,
+    required this.coffeeId,
     required this.userId,
     required this.orderStatus,
     required this.createdAt,
-    required this.productName,
+    required this.coffeeName,
     required this.userName,
     required this.userPhone,
     required this.userAddress,
@@ -29,11 +29,11 @@ class OrderModel {
     int? count,
     int? totalPrice,
     String? orderId,
-    String? productId,
+    String? coffeeId,
     String? userId,
     String? orderStatus,
     String? createdAt,
-    String? productName,
+    String? coffeeName,
     String? userName,
     String? userPhone,
     String? userAddress,
@@ -42,8 +42,8 @@ class OrderModel {
         count: count ?? this.count,
         totalPrice: totalPrice ?? this.totalPrice,
         orderId: orderId ?? this.orderId,
-        productId: productId ?? this.productId,
-        productName: productName ?? this.productName,
+        coffeeId: coffeeId ?? this.coffeeId,
+        coffeeName: coffeeName ?? this.coffeeName,
         userId: userId ?? this.userId,
         orderStatus: orderStatus ?? this.orderStatus,
         createdAt: createdAt ?? this.createdAt,
@@ -57,8 +57,8 @@ class OrderModel {
       count: jsonData['count'] as int? ?? 0,
       totalPrice: jsonData['totalPrice'] as int? ?? 0,
       orderId: jsonData['orderId'] as String? ?? '',
-      productName: jsonData['productName'] as String? ?? '',
-      productId: jsonData['productId'] as String? ?? '',
+      coffeeName: jsonData['coffeeName'] as String? ?? '',
+      coffeeId: jsonData['coffeeId'] as String? ?? '',
       userId: jsonData['userId'] as String? ?? '',
       orderStatus: jsonData['orderStatus'] as String? ?? '',
       createdAt: jsonData['createdAt'] as String? ?? '',
@@ -73,11 +73,11 @@ class OrderModel {
       'count': count,
       'totalPrice': totalPrice,
       'orderId': orderId,
-      'productId': productId,
+      'coffeeId': coffeeId,
       'userId': userId,
       'orderStatus': orderStatus,
       'createdAt': createdAt,
-      'productName': productName,
+      'coffeeName': coffeeName,
       'userName': userName,
       'userPhone': userPhone,
       'userAddress': userAddress,
@@ -90,11 +90,11 @@ class OrderModel {
       count: $count,
       totalPrice: $totalPrice,
       orderId: $orderId,
-      productId: $productId,
+      coffeeId: $coffeeId,
       userId: $userId,
       orderStatus: $orderStatus,
       createdAt: $createdAt,
-      productName: $productName,
+      coffeeName: $coffeeName,
       userName: $userName,
       userPhone: $userPhone,
       userAddress: $userAddress,

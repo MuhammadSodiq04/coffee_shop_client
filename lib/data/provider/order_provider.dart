@@ -18,9 +18,8 @@ class OrderProvider with ChangeNotifier {
     required BuildContext context,
     required OrderModel orderModel,
   }) async {
-    print(orderModel.toString());
     List<OrderModel> exists = userOrders
-        .where((element) => element.productId == orderModel.productId)
+        .where((element) => element.coffeeId == orderModel.coffeeId)
         .toList();
 
     OrderModel? oldOrderModel;

@@ -1,22 +1,23 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:coffee_shop/data/model/coffee_model.dart';
 import 'package:coffee_shop/data/model/universal_data.dart';
+import 'package:coffee_shop/utils/ui_utils/constants.dart';
 
-class ProductsService{
-  Future<UniversalData> addProduct({required CoffeeModel coffeeModel}) async {
+class CoffeeService{
+  Future<UniversalData> addCoffee({required CoffeeModel coffeeModel}) async {
     try {
       DocumentReference newProduct = await FirebaseFirestore.instance
-          .collection("products")
+          .collection(firebaseCollectionName)
           .add(coffeeModel.toJson());
 
       await FirebaseFirestore.instance
-          .collection("products")
+          .collection(firebaseCollectionName)
           .doc(newProduct.id)
           .update({
-        "productId": newProduct.id,
+        "coffeeId": newProduct.id,
       });
 
-      return UniversalData(data: "Product added!");
+      return UniversalData(data: "Coffee added!");
     } on FirebaseException catch (e) {
       return UniversalData(error: e.code);
     } catch (error) {
@@ -24,15 +25,15 @@ class ProductsService{
     }
   }
 
-  Future<UniversalData> updateProduct(
+  Future<UniversalData> updateCoffee(
       {required CoffeeModel coffeeModel}) async {
     try {
       await FirebaseFirestore.instance
-          .collection("products")
-          .doc(coffeeModel.productId)
+          .collection(firebaseCollectionName)
+          .doc(coffeeModel.coffeeId)
           .update(coffeeModel.toJson());
 
-      return UniversalData(data: "Product updated!");
+      return UniversalData(data: "Coffee updated!");
     } on FirebaseException catch (e) {
       return UniversalData(error: e.code);
     } catch (error) {
@@ -40,14 +41,14 @@ class ProductsService{
     }
   }
 
-  Future<UniversalData> deleteProduct({required String productId}) async {
+  Future<UniversalData> deleteCoffee({required String coffeeId}) async {
     try {
       await FirebaseFirestore.instance
-          .collection("products")
-          .doc(productId)
+          .collection(firebaseCollectionName)
+          .doc(coffeeId)
           .delete();
 
-      return UniversalData(data: "Product deleted!");
+      return UniversalData(data: "Coffee deleted!");
     } on FirebaseException catch (e) {
       return UniversalData(error: e.code);
     } catch (error) {

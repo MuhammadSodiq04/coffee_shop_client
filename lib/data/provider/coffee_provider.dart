@@ -1,53 +1,49 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:coffee_shop/data/model/coffee_model.dart';
 import 'package:coffee_shop/data/model/universal_data.dart';
-import 'package:coffee_shop/data/servise/products_service.dart';
+import 'package:coffee_shop/data/servise/coffee_service.dart';
 import 'package:coffee_shop/data/servise/upload_service.dart';
+import 'package:coffee_shop/utils/ui_utils/constants.dart';
 import 'package:coffee_shop/utils/ui_utils/loading_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
-class ProductsProvider with ChangeNotifier{
-  ProductsProvider({required this.productsService});
+class CoffeeProvider with ChangeNotifier{
+  CoffeeProvider({required this.coffeeService});
 
-  final ProductsService productsService;
+  final CoffeeService coffeeService;
 
-  TextEditingController productNameController = TextEditingController();
-  TextEditingController productPriceController = TextEditingController();
-  TextEditingController productDescController = TextEditingController();
-  TextEditingController productCountController = TextEditingController();
+  TextEditingController coffeeNameController = TextEditingController();
+  TextEditingController coffeePriceController = TextEditingController();
+  TextEditingController coffeeDescController = TextEditingController();
 
   List<String> uploadedImagesUrls = [];
 
-  Future<void> addProduct({
+  String searchQuery = '';
+
+  void setSearchQuery(String query) {
+    searchQuery = query;
+    notifyListeners();
+  }
+
+  Future<void> addCoffee({
     required BuildContext context,
     required String categoryId,
     required String productCurrency,
   }) async {
-    String name = productNameController.text;
-    String productDesc = productDescController.text;
-    String priceText = productPriceController.text;
-    String countText = productCountController.text;
 
-    if (name.isNotEmpty &&
-        productDesc.isNotEmpty &&
-        priceText.isNotEmpty &&
-        countText.isNotEmpty) {
-
-      CoffeeModel coffeeModel = CoffeeModel(
-        price: int.parse(priceText),
-        productImages: uploadedImagesUrls,
-        categoryId: categoryId,
-        productId: "",
-        productName: name,
-        description: productDesc,
-        createdAt: DateTime.now().toString(),
-        currency: productCurrency,
-      );
+    CoffeeModel coffeeModel = CoffeeModel(
+      price: int.parse(coffeePriceController.text),
+      coffeeImages: uploadedImagesUrls,
+      coffeeId: "",
+      coffeeName: coffeeNameController.text,
+      description: coffeeDescController.text,
+      createdAt: DateTime.now().toString(),
+    );
 
       showLoading(context: context);
       UniversalData universalData =
-      await productsService.addProduct(coffeeModel: coffeeModel);
+      await coffeeService.addCoffee(coffeeModel: coffeeModel);
       if (context.mounted) {
         hideLoading(dialogContext: context);
       }
@@ -62,18 +58,15 @@ class ProductsProvider with ChangeNotifier{
           showMessage(context, universalData.error);
         }
       }
-    } else {
-      showMessage(context, "Maydonlar to'liq emas!!!");
     }
-  }
 
-  Future<void> deleteProduct({
+  Future<void> deleteCoffees({
     required BuildContext context,
-    required String productId,
+    required String coffeeId,
   }) async {
     showLoading(context: context);
     UniversalData universalData =
-    await productsService.deleteProduct(productId: productId);
+    await coffeeService.deleteCoffee(coffeeId: coffeeId);
     if (context.mounted) {
       hideLoading(dialogContext: context);
     }
@@ -88,24 +81,21 @@ class ProductsProvider with ChangeNotifier{
     }
   }
 
-  Stream<List<CoffeeModel>> getProducts(String categoryId) async* {
-    if (categoryId.isEmpty) {
-      yield* FirebaseFirestore.instance.collection("products").snapshots().map(
+  Stream<List<CoffeeModel>> searchCoffees(String query)async* {
+    yield* FirebaseFirestore.instance
+        .collection(firebaseCollectionName).where("coffeeName", isEqualTo: query)
+        .snapshots()
+        .map((event) => event.docs
+        .map((doc) => CoffeeModel.fromJson(doc.data()))
+        .toList());
+  }
+
+  Stream<List<CoffeeModel>> getCoffees() async* {
+      yield* FirebaseFirestore.instance.collection(firebaseCollectionName).snapshots().map(
             (event1) => event1.docs
             .map((doc) => CoffeeModel.fromJson(doc.data()))
             .toList(),
       );
-    } else {
-      yield* FirebaseFirestore.instance
-          .collection("products")
-          .where("categoryId", isEqualTo: categoryId)
-          .snapshots()
-          .map(
-            (event1) => event1.docs
-            .map((doc) => CoffeeModel.fromJson(doc.data()))
-            .toList(),
-      );
-    }
   }
 
   showMessage(BuildContext context, String error) {
@@ -113,26 +103,24 @@ class ProductsProvider with ChangeNotifier{
     notifyListeners();
   }
 
-  Future<void> updateProduct({
+  Future<void> updateCoffee({
     required BuildContext context,
     required String imagePath,
-    required CoffeeModel productModel,
+    required CoffeeModel coffeeModel,
   }) async {
-    String name = productNameController.text;
-    String categoryDesc = productPriceController.text;
+    String name = coffeeNameController.text;
+    String categoryDesc = coffeePriceController.text;
 
     if (name.isNotEmpty && categoryDesc.isNotEmpty) {
       showLoading(context: context);
-      UniversalData universalData = await productsService.updateProduct(
+      UniversalData universalData = await coffeeService.updateCoffee(
         coffeeModel: CoffeeModel(
           price: 23,
-          productImages: [],
-          categoryId: productModel.categoryId,
-          createdAt: productModel.createdAt,
-          productName: productNameController.text,
-          description: productPriceController.text,
-          productId: productModel.productId,
-          currency: "SO'M",
+          coffeeImages: [],
+          createdAt: coffeeModel.createdAt,
+          coffeeName: coffeeNameController.text,
+          description: coffeePriceController.text,
+          coffeeId: coffeeModel.coffeeId,
         ),
       );
       if (context.mounted) {
@@ -152,7 +140,7 @@ class ProductsProvider with ChangeNotifier{
     }
   }
 
-  Future<void> uploadProductImages({
+  Future<void> uploadCoffeeImages({
     required BuildContext context,
     required List<XFile?> images,
   }) async {
@@ -174,9 +162,8 @@ class ProductsProvider with ChangeNotifier{
 
   clearParameters() {
     uploadedImagesUrls = [];
-    productPriceController.clear();
-    productNameController.clear();
-    productDescController.clear();
-    productCountController.clear();
+    coffeePriceController.clear();
+    coffeeNameController.clear();
+    coffeeDescController.clear();
   }
 }

@@ -1,62 +1,40 @@
+import 'package:coffee_shop/data/cubit/tab_cubit.dart';
 import 'package:coffee_shop/ui/tab_client/basket/basket.dart';
-import 'package:coffee_shop/ui/tab_client/products/products_screen_client.dart';
-import 'package:coffee_shop/utils/colors/app_colors.dart';
+import 'package:coffee_shop/ui/tab_client/coffees/coffee_screen_client.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-class TabBoxClient extends StatefulWidget {
-  const TabBoxClient({super.key});
+class TabBoxClient extends StatelessWidget {
+  TabBoxClient({Key? key}) : super(key: key);
 
-  @override
-  State<TabBoxClient> createState() => _TabBoxClientState();
-}
-
-class _TabBoxClientState extends State<TabBoxClient> {
-  List<Widget> screens = [];
-
-  int currentIndex = 0;
-
-  @override
-  void initState() {
-    screens = [
-      const ProductsScreen(),
-      const BasketScreen(),
-    ];
-
-    super.initState();
-  }
-
-  void _onItemTapped(int index) {
-    setState(() {
-      currentIndex = index;
-    });
-  }
-
+  final List<Widget> screens = [
+    const CoffeeScreen(),
+    const BasketScreen()];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: screens[currentIndex],
-      bottomNavigationBar:Container(
-        color: Colors.transparent,
-        child: ClipRRect(
-          borderRadius: BorderRadius.only(
-            topRight: Radius.circular(24.r),
-            topLeft: Radius.circular(24.r),
-          ),
-          child: BottomNavigationBar(
-            showSelectedLabels: false,
-            showUnselectedLabels: false,
-            backgroundColor: Colors.blue,
-            items: [
-              BottomNavigationBarItem(icon: Icon(Icons.home,color: Colors.white,size: 30.w,), label: '',),
-              BottomNavigationBarItem(icon: Icon(Icons.shopping_cart,color: Colors.white,size: 30.w,), label: '',),
-            ],
-            currentIndex: currentIndex,
-            onTap: _onItemTapped,
-          ),
+      body: screens[context.watch<TabBoxClientCubit>().index], // Watch the current index from the Cubit
+      bottomNavigationBar: ClipRRect(
+        borderRadius: BorderRadius.only(
+          topRight: Radius.circular(24.r),
+          topLeft: Radius.circular(24.r),
         ),
-      )
+        child: BottomNavigationBar(
+          selectedIconTheme: IconThemeData(size: 40.r, color: Colors.white),
+          unselectedIconTheme: IconThemeData(size: 30.r, color: Colors.grey),
+          showSelectedLabels: false,
+          showUnselectedLabels: false,
+          backgroundColor: Colors.brown,
+          items: const [
+            BottomNavigationBarItem(icon: Icon(Icons.home, color: Colors.white), label: ''),
+            BottomNavigationBarItem(icon: Icon(Icons.shopping_cart, color: Colors.white), label: ''),
+          ],
+          currentIndex: context.watch<TabBoxClientCubit>().index, // Watch the current index from the Cubit
+          onTap: (index) => context.read<TabBoxClientCubit>().changeTab(index), // Use the Cubit to change the tab
+        ),
+      ),
     );
   }
 }
