@@ -4,6 +4,7 @@ import 'package:coffee_shop/data/local/storage_repository/storage_repository.dar
 import 'package:coffee_shop/data/provider/coffee_provider.dart';
 import 'package:coffee_shop/data/provider/basket_provider.dart';
 import 'package:coffee_shop/data/servise/orders_service.dart';
+import 'package:coffee_shop/ui/route/route_names.dart';
 import 'package:coffee_shop/ui/route/routes.dart';
 import 'package:coffee_shop/ui/tab_client/tab_box_client.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -53,10 +54,10 @@ class MainApp extends StatelessWidget {
         minTextAdapt: true,
         splitScreenMode: true,
         builder: (context, child) {
-          return MaterialApp(
+          return const MaterialApp(
+              initialRoute: RouteNames.splash,
               onGenerateRoute: AppRoute.generateRoute,
-              debugShowCheckedModeBanner: false,
-              home: TabBoxClient());
+              debugShowCheckedModeBanner: false,);
         });
   }
 }
