@@ -1,4 +1,4 @@
-class OrderModel {
+class BasketModel {
   int count;
   int totalPrice;
   String orderId;
@@ -11,7 +11,7 @@ class OrderModel {
   String userPhone;
   String userAddress;
 
-  OrderModel({
+  BasketModel({
     required this.count,
     required this.totalPrice,
     required this.orderId,
@@ -25,7 +25,7 @@ class OrderModel {
     required this.userAddress,
   });
 
-  OrderModel copWith({
+  BasketModel copWith({
     int? count,
     int? totalPrice,
     String? orderId,
@@ -38,7 +38,7 @@ class OrderModel {
     String? userPhone,
     String? userAddress,
   }) =>
-      OrderModel(
+      BasketModel(
         count: count ?? this.count,
         totalPrice: totalPrice ?? this.totalPrice,
         orderId: orderId ?? this.orderId,
@@ -52,8 +52,8 @@ class OrderModel {
         userAddress: userAddress ?? this.userAddress,
       );
 
-  factory OrderModel.fromJson(Map<String, dynamic> jsonData) {
-    return OrderModel(
+  factory BasketModel.fromJson(Map<String, dynamic> jsonData) {
+    return BasketModel(
       count: jsonData['count'] as int? ?? 0,
       totalPrice: jsonData['totalPrice'] as int? ?? 0,
       orderId: jsonData['orderId'] as String? ?? '',

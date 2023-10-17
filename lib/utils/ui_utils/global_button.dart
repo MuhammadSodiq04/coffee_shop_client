@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:zoom_tap_animation/zoom_tap_animation.dart';
 
-import '../../../utils/colors/app_colors.dart';
 class GlobalButton extends StatelessWidget {
   const GlobalButton({Key? key, required this.title, required this.onTap})
       : super(key: key);
@@ -15,18 +14,18 @@ class GlobalButton extends StatelessWidget {
     return ZoomTapAnimation(
       onTap: onTap,
       child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 10.w),
         height: 50.h,
         decoration: BoxDecoration(
-          border: Border.all(color: Colors.black,width: 2),
           borderRadius: BorderRadius.circular(10.sp),
-          color: Colors.yellow,
+          color: Colors.brown,
         ),
         child: Center(
           child: Text(
             title,
             style: TextStyle(
               fontWeight: FontWeight.w600,
-              color: Colors.black,
+              color: Colors.white,
               fontSize: 18.sp,
               fontFamily: "Montserrat",
             ),

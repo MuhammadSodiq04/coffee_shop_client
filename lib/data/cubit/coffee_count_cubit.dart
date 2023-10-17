@@ -5,5 +5,7 @@ class CoffeeCountCubit extends Cubit<int> {
 
   void incrementCount() => emit(state + 1);
 
+  void defaultCount() => emit(1);
+
   void decrementCount() => emit(state > 1 ? state - 1 : 1); // Ensure count never goes below 1
 }

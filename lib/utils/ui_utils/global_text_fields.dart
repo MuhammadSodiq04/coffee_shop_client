@@ -36,7 +36,7 @@ class _GlobalTextFieldState extends State<GlobalTextField> {
       style: TextStyle(
           fontSize: 18.sp,
           fontWeight: FontWeight.w600,
-          color: AppColors.c_0C1A30,
+          color: Colors.brown,
           fontFamily: "Montserrat"),
       textInputAction: widget.textInputAction,
       keyboardType: widget.keyboardType,
@@ -49,25 +49,25 @@ class _GlobalTextFieldState extends State<GlobalTextField> {
         hintStyle: TextStyle(
             fontSize: 16.sp,
             fontWeight: FontWeight.w600,
-            color: AppColors.c_838589,
+            color: Colors.brown.withOpacity(0.5),
             fontFamily: "Montserrat"),
         enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10.r),
             borderSide: const BorderSide(
-              color: Colors.grey,
+              color: Colors.brown,
             )),
         disabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10.r),
           borderSide: BorderSide(
             width: 1,
-            color: AppColors.white,
+            color: Colors.brown,
           ),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10.r),
           borderSide: const BorderSide(
             width: 1,
-            color: Colors.green,
+            color: Colors.brown,
           ),
         ),
         errorBorder: OutlineInputBorder(
@@ -81,7 +81,7 @@ class _GlobalTextFieldState extends State<GlobalTextField> {
           borderRadius: BorderRadius.circular(10.r),
           borderSide: const BorderSide(
             width: 1,
-            color: Colors.grey,
+            color: Colors.brown,
           ),
         ),
       ),
