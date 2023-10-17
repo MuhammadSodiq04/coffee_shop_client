@@ -3,7 +3,6 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:coffee_shop/data/model/coffee_model.dart';
 import 'package:coffee_shop/data/provider/coffee_provider.dart';
 import 'package:coffee_shop/ui/route/route_names.dart';
-import 'package:coffee_shop/ui/tab_client/coffees/widgets/coffee_detail.dart';
 import 'package:coffee_shop/ui/tab_client/coffees/widgets/coffee_search_screen.dart';
 import 'package:coffee_shop/utils/ui_utils/constants.dart';
 import 'package:coffee_shop/utils/ui_utils/shimmer_photo.dart';
@@ -175,7 +174,7 @@ class _CoffeeScreenState extends State<CoffeeScreen> {
                                         crossAxisCount: 2,
                                         mainAxisSpacing: 18.w,
                                         crossAxisSpacing: 18.w,
-                                        childAspectRatio: 0.75.r),
+                                    childAspectRatio: 0.58.r),
                                 children: [
                                   ...List.generate(
                                     snapshot.data!.length,
@@ -188,7 +187,7 @@ class _CoffeeScreenState extends State<CoffeeScreen> {
                                         },
                                         child: Container(
                                           width: 155.w,
-                                          height: 230.h,
+                                          height: 230.w,
                                           decoration: BoxDecoration(
                                               borderRadius:
                                                   BorderRadius.circular(16),
@@ -200,7 +199,7 @@ class _CoffeeScreenState extends State<CoffeeScreen> {
                                               ClipRRect(
                                                 borderRadius: const BorderRadius.only(topLeft: Radius.circular(16), topRight: Radius.circular(16)),
                                                 child: CachedNetworkImage(
-                                                  height: 172.h,
+                                                  height: 175.w,
                                                   width: 175.w,
                                                   fit: BoxFit.fill,
                                                   imageUrl: coffeeModel
@@ -213,7 +212,7 @@ class _CoffeeScreenState extends State<CoffeeScreen> {
                                                 ),
                                               ),
                                               Padding(
-                                                padding: EdgeInsets.symmetric(horizontal: 10.w),
+                                                padding: EdgeInsets.only(left: 10.w,top: 10.h,right: 10.w,bottom: 5.h),
                                                 child: Text(
                                                   coffeeModel.coffeeName,
                                                   style: TextStyle(
@@ -237,7 +236,7 @@ class _CoffeeScreenState extends State<CoffeeScreen> {
                                                   ),
                                                 ),
                                               ),
-                                            ].divide(SizedBox(height: 5.h,)),
+                                            ],
                                           ),
                                         ),
                                       );
