@@ -1,21 +1,21 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:coffee_shop/data/model/order_model.dart';
+import 'package:coffee_shop/data/model/basket_model.dart';
 import 'package:coffee_shop/data/model/universal_data.dart';
 import 'package:coffee_shop/utils/ui_utils/constants.dart';
 
-class OrderService {
-  Future<UniversalData> addOrder({required OrderModel orderModel}) async {
+class BasketService {
+  Future<UniversalData> addOrder({required BasketModel basketModel}) async {
     try {
       DocumentReference newOrder = await FirebaseFirestore.instance
           .collection(firebaseOrderName)
-          .add(orderModel.toJson());
+          .add(basketModel.toJson());
 
       await FirebaseFirestore.instance
           .collection(firebaseOrderName)
           .doc(newOrder.id)
           .update({"orderId": newOrder.id});
 
-      return UniversalData(data: "Order added!");
+      return UniversalData(data: "Added to Basket!");
     } on FirebaseException catch (e) {
       return UniversalData(error: e.code);
     } catch (error) {
@@ -23,14 +23,14 @@ class OrderService {
     }
   }
 
-  Future<UniversalData> updateOrder({required OrderModel orderModel}) async {
-    print("INSIDE UPDATE: ${orderModel.orderId}");
+  Future<UniversalData> updateOrder({required BasketModel basketModel}) async {
+    print("INSIDE UPDATE: ${basketModel.orderId}");
     try {
       await FirebaseFirestore.instance
           .collection(firebaseOrderName)
-          .doc(orderModel.orderId)
+          .doc(basketModel.orderId)
           .update(
-        orderModel.toJson(),
+        basketModel.toJson(),
       );
 
       return UniversalData(data: "Order updated!");

@@ -9,12 +9,11 @@ class ShimmerPhoto extends StatelessWidget {
   Widget build(BuildContext context) {
     return Shimmer.fromColors(
         baseColor: Colors.white,
-        highlightColor: Colors.yellow,
+        highlightColor: Colors.brown,
         child: Container(
-          height: 100.h,
           decoration:  BoxDecoration(
             borderRadius: BorderRadius.circular(15.r),
-            color: Colors.white,
+            color: Colors.brown,
           ),
         ));
   }

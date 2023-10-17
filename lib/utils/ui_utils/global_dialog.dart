@@ -1,6 +1,8 @@
+import 'package:coffee_shop/data/local/storage_repository/storage_repository.dart';
 import 'package:coffee_shop/data/model/coffee_model.dart';
-import 'package:coffee_shop/data/model/order_model.dart';
-import 'package:coffee_shop/data/provider/order_provider.dart';
+import 'package:coffee_shop/data/model/basket_model.dart';
+import 'package:coffee_shop/data/provider/basket_provider.dart';
+import 'package:coffee_shop/utils/ui_utils/global_button.dart';
 import 'package:coffee_shop/utils/ui_utils/global_text_fields.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -12,9 +14,9 @@ void showProductAlertDialog(
     required String title,
     required CoffeeModel coffeeModel,
     required int count}) {
-  TextEditingController nameController = TextEditingController();
-  TextEditingController phoneController = TextEditingController(text: "+998");
-  TextEditingController addressController = TextEditingController();
+  TextEditingController nameController = TextEditingController(text: StorageRepository.getString("UserName"));
+  TextEditingController phoneController = TextEditingController(text: StorageRepository.getString("UserPhone").isEmpty?"+998":StorageRepository.getString("UserPhone"));
+  TextEditingController addressController = TextEditingController(text: StorageRepository.getString("UserAddress"));
   showDialog(
     barrierDismissible: false,
     context: context,
@@ -22,7 +24,12 @@ void showProductAlertDialog(
       return Scaffold(
         backgroundColor: Colors.transparent,
         body: AlertDialog(
-          title: Text(title),
+          title: Text(title,
+            style: TextStyle(
+                fontSize: 18.sp,
+                fontWeight: FontWeight.w700,
+                color: Colors.brown,
+                fontFamily: "Montserrat"),),
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(24.r)),
           content: Container(
@@ -63,21 +70,21 @@ void showProductAlertDialog(
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
-                          ElevatedButton(
-                              onPressed: () {
+                          GlobalButton(
+                              onTap: () {
                                 Navigator.pop(context);
                               },
-                              child: const Text('Cancel')),
-                          ElevatedButton(
-                              onPressed: () {
+                              title: 'Cancel'),
+                          GlobalButton(
+                              onTap: () {
                                 if (nameController.text.isNotEmpty &&
                                     phoneController.text.isNotEmpty &&
                                     addressController.text.isNotEmpty) {
-                                  Provider.of<OrderProvider>(context,
+                                  Provider.of<BasketProvider>(context,
                                           listen: false)
                                       .addOrder(
                                     context: context,
-                                    orderModel: OrderModel(
+                                    orderModel: BasketModel(
                                       count: count,
                                       totalPrice: coffeeModel.price * count,
                                       orderId: "",
@@ -106,7 +113,7 @@ void showProductAlertDialog(
                                   );
                                 }
                               },
-                              child: const Text("Next")),
+                              title: "Next"),
                         ],
                       )
                     ]),
