@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
-void showProductAlertDialog(
+void showGlobalAlertDialog(
     {required BuildContext context,
     required String title,
     required CoffeeModel coffeeModel,

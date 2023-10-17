@@ -139,7 +139,7 @@ class _CoffeeDetailScreenState extends State<CoffeeDetailScreen> {
                   ),
                   GlobalButton(
                     onTap: ()async {
-                      showProductAlertDialog(context: context, title: "Client info",coffeeModel: coffeeModel,count: context.read<CoffeeCountCubit>().state);
+                      showGlobalAlertDialog(context: context, title: "Client info",coffeeModel: coffeeModel,count: context.read<CoffeeCountCubit>().state);
                     },
                     title: "Add to Card",
                   )
